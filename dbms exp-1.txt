@@ -24,5 +24,6 @@ alter table st_info add perc number;
 
 
 4. calculate total & perc 
-update st_info set total=mi+m2+m3;
+update st_info set total=m1+m2+m3;
+
 update st_info set perc=total/3;
