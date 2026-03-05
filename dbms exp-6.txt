@@ -1,42 +1,47 @@
-prac 6
-#hellow world pogramme using procedures
-Create procedure Hello_world
-As
-Begin
-DBMS_OUTPUT.PUT_line('Hello World');
-End;
-/
-#now to execute above program 
-EXEC Hello_world;
-execute Hello_world;
+#hello world program using procedures
+create procedure hello_world
+ As
+ Begin
+       DBMS_OUTPUT.PUT_LINE('Hello World!');
+ End;
+ /
 
-#add 'welcome to sit' after 'Hello world'
-create or replace procedure Hello_world
-As
-Begin
-DBMS_OUTPUT.PUT_line('Hello World,Welcome to SIT');
-End;
-/
+#now to execute above program
+EXEC hello_world;
 
-#additio of two numbers
-CREATE OR REPLACE PROCEDURE addition
-AS
-    num1 NUMBER := 5;
-    num2 NUMBER := 10;
-BEGIN
-    DBMS_OUTPUT.PUT_LINE('RESULT: ' || (num1 + num2));
-END;
-/
-Swapping Two Numbers Without Using a Third Variable Procedure Creation
-CREATE OR REPLACE PROCEDURE SwapNumbers (
-    num1 IN OUT NUMBER,
-    num2 IN OUT NUMBER
+
+add 'welcome to sit' after 'hello world!'
+create or replace procedure hello_world
+ As
+ Begin
+       DBMS_OUTPUT.PUT_LINE('Hello World!, Welcome to SIT');
+ End;
+ /
+
+
+
+#Addition of two numbers
+create OR REPLACE procedure add_nos(
+       num1 number :=5,
+       num2 number :=10
+       )
+as 
+   begin
+     DBMS_OUTPUT.PUT_LINE('RESULT: ' || NUM1+NUM2);
+   END;
+  /
+
+
+#swaping two numbers
+create OR REPLACE SwapNumbers(
+num1 IN OUT NUMBER,
+num2 IN OUT NUMBER
 ) AS
-BEGIN
-    num1 := num1 + num2;
-    num2 := num1 - num2;
-    num1 := num1 - num2;
-END;
+  BEGIN
+      num1:=num1+num2;
+      num2=num1-num2;
+      num1:=num1-num2;
+  END;
 /
 VARIABLE X NUMBER;
 VARIABLE Y NUMBER;
@@ -118,4 +123,5 @@ ELSE
 DBMS_OUTPUT.PUT_LINE('Largest number is: ' || c);
 END IF;
 END;
+
 /
