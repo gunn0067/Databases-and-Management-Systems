@@ -1,0 +1,109 @@
+A. if there are marks of 4 subjects
+     1. check for pass condition(each subject must be of 100 marks)
+     2. check for:
+       a. distinction if total above 75%
+       b. first division if total above 65%
+       c. second division if total above 50%
+   output - Result = Fail
+            or  = total, pass, result, division
+
+   case 1:- cs = 75
+         m1 = 45
+         m2 = 52
+         m3 = 74
+
+
+   case 2:- cs = 75
+         m1 = 79
+         m2 = 100
+         m3 = 95
+
+Code:- 
+DECLARE
+  cs NUMBER;
+  m1 NUMBER;
+  m2 NUMBER;
+  m3 NUMBER;
+  total NUMBER;
+  per NUMBER;
+
+BEGIN
+  cs := &cs;
+  m1 := &m1;
+  m2 := &m2;
+  m3 := &m3;
+
+  IF cs < 50 OR m1 < 50 OR m2 < 50 OR m3 < 50 THEN
+    DBMS_OUTPUT.PUT_LINE('Result: FAIL');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Result: PASS');
+
+    total := cs + m1 + m2 + m3;
+    per := (total / 400) * 100;
+
+    DBMS_OUTPUT.PUT_LINE('Total Marks: ' || total);
+    DBMS_OUTPUT.PUT_LINE('Percentage: ' || per);
+
+    IF per > 75 THEN
+      DBMS_OUTPUT.PUT_LINE('Division: Distinction');
+    ELSIF per > 60 THEN
+      DBMS_OUTPUT.PUT_LINE('Division: First Division');
+    ELSIF per > 50 THEN
+      DBMS_OUTPUT.PUT_LINE('Division: Second Division');
+    ELSE
+      DBMS_OUTPUT.PUT_LINE('Division: Pass');
+    END IF;
+
+  END IF;
+END;
+/
+
+
+
+B. if we take input from user 
+
+Code:- 
+DECLARE
+    cs NUMBER;
+    m1 NUMBER;
+    m2 NUMBER;
+    m3 NUMBER;
+    total NUMBER;
+    per NUMBER;
+
+BEGIN
+    -- Taking input from user
+    cs := &cs;
+    m1 := &m1;
+    m2 := &m2;
+    m3 := &m3;
+
+    -- Calculate total
+    total := cs + m1 + m2 + m3;
+
+    DBMS_OUTPUT.PUT_LINE('Total Marks: ' || total);
+
+    -- Check pass or fail
+    IF cs < 50 OR m1 < 50 OR m2 < 50 OR m3 < 50 THEN
+        DBMS_OUTPUT.PUT_LINE('Result: FAIL');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Result: PASS');
+
+        -- Calculate percentage
+        per := (total / 400) * 100;
+        DBMS_OUTPUT.PUT_LINE('Percentage: ' || per);
+
+        -- Division
+        IF per >= 75 THEN
+            DBMS_OUTPUT.PUT_LINE('Division: Distinction');
+        ELSIF per >= 60 THEN
+            DBMS_OUTPUT.PUT_LINE('Division: First Division');
+        ELSIF per >= 50 THEN
+            DBMS_OUTPUT.PUT_LINE('Division: Second Division');
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('Division: Pass');
+        END IF;
+    END IF;
+
+END;
+/
