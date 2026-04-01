@@ -1,0 +1,81 @@
+1. create table emp2 with attributes empno as integer type, name as string and category as integer type. 
+
+CREATE TABLE emp2 (
+    empno INT,
+    name CHAR(50),
+    category INT
+);
+
+
+2. Design trigger such that string values should be inserted or updatd as uppercase only; example string=upper(string). 
+
+CREATE OR REPLACE TRIGGER emp2_uppercase2
+BEFORE INSERT OR UPDATE ON emp2
+FOR EACH ROW
+BEGIN
+    :NEW.name := UPPER(:NEW.name);
+END;
+/
+
+INSERT INTO emp2 VALUES (1, 'Sam', 1);
+INSERT INTO emp2 VALUES (2, 'John', 2);
+INSERT INTO emp2 VALUES (3, 'Alice', 1);
+INSERT INTO emp2 VALUES (4, 'Bob', 3);
+INSERT INTO emp2 VALUES (5, 'Emma', 2);
+INSERT INTO emp2 VALUES (6, 'David', 1);
+
+
+
+3. add new attriute salary with proper dataype to the above table. 
+
+ALTER TABLE emp2
+ADD salary NUMBER;
+
+
+
+
+4. design a trigger which will be fired when a new record is inserted or updated for the following conditions:
+   1. salary shold be more than 10000 for category 1
+   2. salary should be more than 20000 for category 2
+   3. salary should be more than 30000 for category 3
+
+CREATE OR REPLACE TRIGGER emp2_salary_check
+BEFORE INSERT OR UPDATE ON emp2
+FOR EACH ROW
+BEGIN
+    IF :NEW.category = 1 AND :NEW.salary <= 10000 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Salary must be greater than 10000 for category 1');
+
+    ELSIF :NEW.category = 2 AND :NEW.salary <= 20000 THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Salary must be greater than 20000 for category 2');
+
+    ELSIF :NEW.category = 3 AND :NEW.salary <= 30000 THEN
+        RAISE_APPLICATION_ERROR(-20003, 'Salary must be greater than 30000 for category 3');
+    END IF;
+END;
+/
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+Practical 15
+
+
+# month as 3 char
+1. create or replace procedure to_month
+
+as
+   v_month varchar2(10);
+begin
+   v_month := to_char(sysdate, 'MON');
+   dbms_output.put_line('the current month is ' || v_month);
+end;
+/
+
+
+
+
+
