@@ -1,0 +1,48 @@
+EXPERIMENT 16
+------------------------------------------
+
+RECALL PRAC 15 CONDITIONS:
+1) Category 1 -> 10000
+2) Category 2 -> 20000
+3) Category 3 -> 30000
+4) Category 4 -> 40000
+
+5) Upper limit = v_lower * 10
+6) Lower limit = v_upper / 10
+
+------------------------------------------
+
+COMPOUND TRIGGER (MAX_MIN_SAL)
+
+CREATE OR REPLACE TRIGGER max_min_sal
+FOR INSERT OR UPDATE ON emp2
+COMPOUND TRIGGER
+
+  v_max   emp2.salary%TYPE;
+  v_min   emp2.salary%TYPE;
+  v_upper emp2.salary%TYPE;
+  v_lower emp2.salary%TYPE;
+
+BEFORE STATEMENT IS
+BEGIN
+  SELECT MAX(salary) INTO v_max FROM emp2;
+  SELECT MIN(salary) INTO v_min FROM emp2;
+
+  v_upper := v_min * 10;
+  v_lower := v_max / 10;
+END BEFORE STATEMENT;
+
+BEFORE EACH ROW IS
+BEGIN
+  IF :NEW.salary < v_lower OR :NEW.salary > v_upper THEN
+    RAISE_APPLICATION_ERROR(-20001, 'VALUE NOT IN RANGE');
+  END IF;
+END BEFORE EACH ROW;
+
+END;
+/
+
+------------------------------------------
+OUTPUT:
+Trigger created successfully.
+------------------------------------------
