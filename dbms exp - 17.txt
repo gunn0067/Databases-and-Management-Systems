@@ -1,0 +1,45 @@
+EXPERIMENT17
+-- Audit table creates without data copy
+CREATE TABLE emp2_audit AS
+SELECT * FROM emp2 WHERE 1 = 2;
+
+-- Naye columns add kar rahe hai audit ke liye
+ALTER TABLE emp2_audit
+ADD (
+    updated_salary NUMBER(10,2),
+    modified_date DATE
+);
+
+-----------------------------------------------------
+
+-- Trigger will be fired when salary is updated
+CREATE OR REPLACE TRIGGER trg_salary_audit
+AFTER UPDATE OF salary ON emp2
+FOR EACH ROW
+BEGIN
+    INSERT INTO emp2_audit (
+        empno,
+        name,
+        category,
+        salary,
+        updated_salary,
+        modified_date
+    )
+    VALUES (
+        :OLD.empno,
+        :OLD.name,
+        :OLD.category,
+        :OLD.salary,
+        :NEW.salary,
+        SYSDATE
+    );
+END;
+/
+
+-----------------------------------------------------
+
+-- update statement to test
+UPDATE emp2
+SET salary = 25000
+WHERE empno = 101;
+
