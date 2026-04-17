@@ -50,5 +50,5 @@ BEGIN
     END IF;
 END;
 /
-insert into st_info(roll,name,sub1) VALUES (1, 'Aryan', -120); # it will generate error when the value is not in range otherwise it wont
+insert into st_info(roll,name,sub1) VALUES (1, 'Gunn', -110); # it will generate error when the value is not in range otherwise it wont
 ------------------------------------------------------------------------------------------------------------------------------------------
