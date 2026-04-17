@@ -60,22 +60,3 @@ END;
 
 -------------------------------------------------------------------------------------------------------------------
 
-
-Practical 15
-
-
-# month as 3 char
-1. create or replace procedure to_month
-
-as
-   v_month varchar2(10);
-begin
-   v_month := to_char(sysdate, 'MON');
-   dbms_output.put_line('the current month is ' || v_month);
-end;
-/
-
-
-
-
-
